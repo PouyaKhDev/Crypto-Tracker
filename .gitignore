@@ -1,0 +1,76 @@
+# ==========================================
+# General / OS / IDE
+# ==========================================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ==========================================
+# Environment & Secrets
+# ==========================================
+.env
+.env.local
+.env.*.local
+*.pem
+
+# ==========================================
+# Django / Python (app/)
+# ==========================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Database
+db.sqlite3
+*.sqlite3
+
+# Django specific
+media/
+# static/ (Uncomment if you collect static files locally and don't want them in git)
+# staticfiles/
+
+# Testing / Coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+
+# Logs
+*.log
+logs/
+
+# ==========================================
+# Frontend / Node.js (frontend/)
+# ==========================================
+# Dependencies
+frontend/node_modules/
+frontend/.pnp
+frontend/.pnp.js
+
+# Build outputs
+frontend/dist/
+frontend/build/
+frontend/.cache/
+
+# Testing
+frontend/coverage/
+frontend/.nyc_output/
+
+# Misc
+frontend/.npm
+frontend/.eslintcache

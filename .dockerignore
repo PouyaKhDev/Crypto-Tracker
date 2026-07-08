@@ -1,0 +1,49 @@
+# ==========================================
+# General / VCS / IDE
+# ==========================================
+.git/
+.gitignore
+.dockerignore
+README.md
+LICENSE
+.vscode/
+.idea/
+*.md
+
+# ==========================================
+# Docker / Compose (Prevent recursive context)
+# ==========================================
+docker-compose.yml
+docker-compose.override.yml
+# Note: Do NOT ignore Dockerfile or entrypoint.sh
+
+# ==========================================
+# Django / Python (app/)
+# ==========================================
+app/__pycache__/
+app/*.pyc
+app/.venv/
+app/venv/
+app/.env
+app/db.sqlite3
+app/media/
+app/.coverage
+app/htmlcov/
+app/*.log
+
+# ==========================================
+# Frontend / Node.js (frontend/)
+# ==========================================
+# CRITICAL: Never send node_modules to the Docker build context
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.cache/
+frontend/.env
+frontend/.env.*
+
+# ==========================================
+# Host OS / Misc
+# ==========================================
+.DS_Store
+Thumbs.db
