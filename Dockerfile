@@ -11,10 +11,14 @@ WORKDIR /app
 EXPOSE 8000
 
 
-RUN pip install --upgrade pip && \
-    pip install -r /tmp/requirements.txt && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    nodejs npm gcc python3-dev libpq-dev && \
+    pip install --upgrade pip && \
+    pip install --no-cache-dir -r /tmp/requirements.txt && \
     chmod +x /app/entrypoint.sh && \
-    rm -f /tmp/requirements.txt
+    rm -f /tmp/requirements.txt && \
+    apt-get purge -y --auto-remove gcc python3-dev
 
 ENTRYPOINT ["sh", "/app/entrypoint.sh"]
 

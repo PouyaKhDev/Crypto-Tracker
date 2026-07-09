@@ -40,8 +40,9 @@ db.sqlite3
 
 # Django specific
 media/
-# static/ (Uncomment if you collect static files locally and don't want them in git)
-# staticfiles/
+staticfiles/
+app/staticfiles/
+app/static/frontend/
 
 # Testing / Coverage
 .coverage

@@ -20,6 +20,13 @@ docker-compose.override.yml
 # ==========================================
 # Django / Python (app/)
 # ==========================================
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+staticfiles/
+app/staticfiles/
 app/__pycache__/
 app/*.pyc
 app/.venv/
@@ -30,17 +37,19 @@ app/media/
 app/.coverage
 app/htmlcov/
 app/*.log
+app/static/frontend/
 
 # ==========================================
 # Frontend / Node.js (frontend/)
 # ==========================================
 # CRITICAL: Never send node_modules to the Docker build context
-frontend/node_modules/
-frontend/dist/
-frontend/build/
-frontend/.cache/
-frontend/.env
-frontend/.env.*
+node_modules
+app/frontend/node_modules/
+app/frontend/dist/
+app/frontend/build/
+app/frontend/.cache/
+app/frontend/.env
+app/frontend/.env.*
 
 # ==========================================
 # Host OS / Misc
