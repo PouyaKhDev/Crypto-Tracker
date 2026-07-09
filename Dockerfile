@@ -5,8 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /tmp/requirements.txt
-COPY ./festival_app /app
-COPY ./entrypoint.sh /app/entrypoint.sh
+COPY ./app /app
 
 WORKDIR /app
 EXPOSE 8000

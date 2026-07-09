@@ -74,3 +74,5 @@ frontend/.nyc_output/
 # Misc
 frontend/.npm
 frontend/.eslintcache
+
+tmux.conf.sh
