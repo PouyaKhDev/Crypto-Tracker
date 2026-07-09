@@ -11,11 +11,7 @@ WORKDIR /app
 EXPOSE 8000
 
 
-RUN apt-get update && \
-    apt-get install -y sqlite3 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install --upgrade pip && \
+RUN pip install --upgrade pip && \
     pip install -r /tmp/requirements.txt && \
     chmod +x /app/entrypoint.sh && \
     rm -f /tmp/requirements.txt
