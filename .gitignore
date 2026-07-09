@@ -62,6 +62,7 @@ node_modules/
 .pnp
 .pnp.js
 
+
 # Build outputs
 frontend/dist/
 frontend/build/
