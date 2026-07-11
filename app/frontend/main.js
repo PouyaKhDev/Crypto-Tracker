@@ -1,4 +1,3 @@
-import { Chart, registerables } from "chart.js";
+import Chart from "chart.js/auto";
 
-// Register all Chart.js components
-Chart.register(...registerables);
+window.Chart = Chart;

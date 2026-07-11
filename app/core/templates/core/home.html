@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+<!--  -->
+{% load static %}
+
+<!-- Home CSS and JS files -->
+{% block css_js %}
+<link rel="stylesheet" href="{% static 'core/home.css' %}" />
+<script defer src="{% static 'core/home.js' %}"></script>
+{% endblock css_js %}
+<!--  -->
+
+<!-- Main Content -->
+{% block main %}
+<main class="main-content" role="main">
+  {% include 'core/partials/stats.html' %}
+  <!--  -->
+  {% include 'core/partials/crypto_table.html' %}
+</main>
+{% endblock main %}

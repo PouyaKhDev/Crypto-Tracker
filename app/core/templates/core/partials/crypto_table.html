@@ -1,0 +1,37 @@
+<!-- Crypto Table Section -->
+<section class="crypto-table-section" aria-label="Cryptocurrency Prices">
+  <div class="section-header">
+    <h2 class="section-title">Today's Cryptocurrency Prices by Market Cap</h2>
+    <p class="section-subtitle">
+      The global cryptocurrency market cap today is
+      <span id="market-cap-text">-</span>
+      , with a 24-hour volume of
+      <span id="volume-text">-</span>
+      .
+    </p>
+  </div>
+
+  <div class="table-container">
+    <table class="crypto-table" role="table" aria-label="Cryptocurrency prices">
+      <thead>
+        <tr>
+          <th scope="col" class="col-fav"></th>
+          <th scope="col" class="col-rank">#</th>
+          <th scope="col" class="col-name">Name</th>
+          <th scope="col" class="col-price">Price</th>
+          <th scope="col" class="col-change">1h %</th>
+          <th scope="col" class="col-change">24h %</th>
+          <th scope="col" class="col-change">7d %</th>
+          <th scope="col" class="col-market-cap">Market Cap</th>
+          <th scope="col" class="col-volume">Volume (24h)</th>
+          <th scope="col" class="col-supply">Circulating Supply</th>
+          <th scope="col" class="col-chart">Last 7 Days</th>
+        </tr>
+      </thead>
+
+      <tbody id="crypto-table-body">
+        <!-- Crypto rows will be inserted here by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+</section>
