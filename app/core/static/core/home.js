@@ -42,11 +42,6 @@ const elements = {
 
   // Table
   tableBody: document.getElementById("crypto-table-body"),
-
-  // Pagination
-  prevPage: document.getElementById("prev-page"),
-  nextPage: document.getElementById("next-page"),
-  paginationNumbers: document.getElementById("pagination-numbers"),
 };
 
 //-----------------------------------------
@@ -101,7 +96,6 @@ async function fetchGlobalData() {
 /**
  * Fetch cryptocurrency market data
  */
-
 async function fetchCryptoData(page = 1) {
   try {
     showLoading(elements.tableBody, true);
@@ -115,7 +109,6 @@ async function fetchCryptoData(page = 1) {
 
     allCryptoData = data;
     renderTable(data);
-    renderPagination(page);
   } catch (error) {
     console.error("Error fetching crypto data:", error);
     showError("Failed to load cryptocurrency data. Please try again later.", elements.tableBody);
@@ -159,10 +152,10 @@ function createCryptoRow(crypto, index) {
   const row = document.createElement("tr");
   row.setAttribute("role", "row");
 
+  console.log(crypto);
+
   // Calculate price changes
-  const change1h = crypto.price_change_percentage_1h_in_currency || 0;
-  const change24h = crypto.price_change_percentage_24h_in_currency || 0;
-  const change7d = crypto.price_change_percentage_7d_in_currency || 0;
+  const change24h = crypto.price_change_percentage_24h || 0;
 
   // Format values
   const price = formatCurrency(crypto.current_price);
@@ -181,7 +174,6 @@ function createCryptoRow(crypto, index) {
         </svg>
       </button>
     </td>
-    <td class="col-rank">${crypto.market_cap_rank || index + 1}</td>
     <td class="col-name">
       <div class="coin-info">
         <div class="coin-icon">${firstLetter}</div>
@@ -192,14 +184,8 @@ function createCryptoRow(crypto, index) {
       </div>
     </td>
     <td class="col-price">${price}</td>
-    <td class="col-change ${change1h >= 0 ? "text-positive" : "text-negative"}">
-      ${formatPercentage(change1h)}
-    </td>
     <td class="col-change ${change24h >= 0 ? "text-positive" : "text-negative"}">
       ${formatPercentage(change24h)}
-    </td>
-    <td class="col-change ${change7d >= 0 ? "text-positive" : "text-negative"}">
-      ${formatPercentage(change7d)}
     </td>
     <td class="col-market-cap">${marketCap}</td>
     <td class="col-volume">${volume}</td>
@@ -286,35 +272,6 @@ function renderSparkline(coinId, data) {
   chartInstances[coinId] = chart;
 }
 
-/**
- * Render pagination controls
- * @param {number} currentPage - Current page number
- */
-function renderPagination(current) {
-  if (!elements.paginationNumbers) return;
-
-  const totalPages = 5; // Example: CoinGecko typically has many pages
-
-  elements.paginationNumbers.innerHTML = "";
-
-  for (let i = 1; i <= totalPages; i++) {
-    const button = document.createElement("button");
-    button.className = `pagination-number ${i === current ? "active" : ""}`;
-    button.textContent = i;
-    button.setAttribute("aria-label", `Page ${i}`);
-    button.addEventListener("click", () => handlePageChange(i));
-    elements.paginationNumbers.appendChild(button);
-  }
-
-  // Update prev/next buttons
-  if (elements.prevPage) {
-    elements.prevPage.disabled = current === 1;
-  }
-  if (elements.nextPage) {
-    elements.nextPage.disabled = current === totalPages;
-  }
-}
-
 //-----------------------------------------
 //  Event Handlers
 //-----------------------------------------
@@ -372,21 +329,6 @@ function handleSearch(query) {
  * Initialize event listeners
  */
 function initEventListeners() {
-  // Pagination
-  if (elements.prevPage) {
-    elements.prevPage.addEventListener("click", () => {
-      if (currentPage > 1) {
-        handlePageChange(currentPage - 1);
-      }
-    });
-  }
-
-  if (elements.nextPage) {
-    elements.nextPage.addEventListener("click", () => {
-      handlePageChange(currentPage + 1);
-    });
-  }
-
   // Search
   const searchInput = document.querySelector(".search-input");
   if (searchInput) {

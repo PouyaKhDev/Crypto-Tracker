@@ -3,7 +3,8 @@
 //-----------------------------------------
 
 // CoinGecko API Key
-const API_KEY = "";
+// const API_KEY = "";
+const API_KEY = "CG-FiFwM78rDbqWSGhHo5xobDjw";
 
 // API Base URL
 const API_BASE_URL = "https://api.coingecko.com/api/v3";
@@ -243,7 +244,6 @@ function createSpinner() {
   const spinnerContainerEl = document.createElement("div");
   spinnerContainerEl.classList.add("spinner-container");
   spinnerContainerEl.insertAdjacentHTML("afterbegin", '<div class="spinner"></div>');
-  console.log(spinnerContainerEl);
   return spinnerContainerEl;
 }
 
