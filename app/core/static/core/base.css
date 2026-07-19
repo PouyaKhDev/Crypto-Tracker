@@ -18,6 +18,7 @@
   --bg-primary: #f9fafb;
   --bg-secondary: #ffffff;
   --bg-tertiary: #f3f4f6;
+  --bg-overlay: #6b728080;
 
   /* Colors - Text */
   --text-primary: #111827;
@@ -544,4 +545,52 @@ ol {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/*
+-----------------------------------------------
+  Buttons
+-----------------------------------------------
+*/
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-ghost:hover {
+  border-color: var(--color-primary-start);
+  color: var(--color-primary-start);
+}
+
+.btn-primary {
+  background: var(--color-primary-gradient);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }

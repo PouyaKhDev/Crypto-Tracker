@@ -76,6 +76,19 @@ function formatDateTime(date, locale = "en-US") {
 }
 
 /**
+ * Format date/time
+ * @param {string|Date} date - The date to format
+ * @param {string} locale - Locale string
+ * @returns {string} Formatted date string containing only day
+ */
+function formatDateOnlyDay(date, locale = "en-US") {
+  return new Intl.DateTimeFormat(locale, {
+    month: "short",
+    day: "numeric",
+  }).format(new Date(date));
+}
+
+/**
  * Debounce function
  * @param {Function} func - The function to debounce
  * @param {number} wait - Wait time in milliseconds
@@ -178,9 +191,27 @@ async function getGlobalCryptoData() {
   return await fetchFromCoinGecko("/global");
 }
 
+/**
+ * Get global defi data
+ * @returns {Promise<Object>} Global defi data
+ */
 async function getGlobalDefiData() {
   const defiData = await fetchFromCoinGecko("/global/decentralized_finance_defi");
   return defiData.data;
+}
+
+/**
+ * Get chart data for a coin
+ * @param {String} coinId - Cryptocurrency ID
+ * @returns {Promise<Object>} Global market data
+ */
+async function getCoinChart(coinId) {
+  const coinChartData = await fetchFromCoinGecko(`/coins/${coinId}/market_chart`, {
+    vs_currency: "usd",
+    days: "7",
+    interval: "daily",
+  });
+  return coinChartData.prices;
 }
 
 /**

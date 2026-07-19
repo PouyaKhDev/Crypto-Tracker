@@ -9,14 +9,6 @@ const itemsPerPage = 20;
 const sparklineBaseOptions = {
   responsive: true,
   maintainAspectRatio: false,
-  plugins: {
-    legend: { display: false },
-    tooltip: { enabled: false },
-  },
-  scales: {
-    x: { display: false },
-    y: { display: false },
-  },
   interaction: {
     intersect: false,
     mode: "index",
@@ -107,12 +99,34 @@ async function fetchCryptoData(page = 1) {
 
     showLoading(elements.tableBody, false);
 
-    allCryptoData = data;
     renderTable(data);
   } catch (error) {
     console.error("Error fetching crypto data:", error);
     showError("Failed to load cryptocurrency data. Please try again later.", elements.tableBody);
     showLoading(elements.tableBody, false);
+  }
+}
+
+/**
+ * Fetch chart data for a coin
+ * @param {String} coinId - Cryptocurrency ID
+ */
+
+async function fetchChartData(coinId) {
+  try {
+    renderChartOverlay();
+    const overlayContainer = document.querySelector(".canvas-container");
+    showLoading(overlayContainer, true);
+
+    const data = await getCoinChart(coinId);
+
+    showLoading(overlayContainer, false);
+
+    renderSparkline(coinId, data);
+  } catch (error) {
+    console.error("Error fetching chart data:", error);
+    showError(`Failed to load chart data for ${coinId}. Please try again later.`, overlayContainer);
+    showLoading(overlayContainer, false);
   }
 }
 
@@ -132,13 +146,6 @@ function renderTable(data) {
   data.forEach((crypto, index) => {
     const row = createCryptoRow(crypto, index);
     elements.tableBody.appendChild(row);
-
-    // Render sparkline chart after row is added to DOM
-    if (crypto.sparkline_in_7d?.price) {
-      setTimeout(() => {
-        renderSparkline(crypto.id, crypto.sparkline_in_7d.price);
-      }, 0);
-    }
   });
 }
 
@@ -151,9 +158,6 @@ function renderTable(data) {
 function createCryptoRow(crypto, index) {
   const row = document.createElement("tr");
   row.setAttribute("role", "row");
-
-  console.log(crypto);
-
   // Calculate price changes
   const change24h = crypto.price_change_percentage_24h || 0;
 
@@ -191,7 +195,7 @@ function createCryptoRow(crypto, index) {
     <td class="col-volume">${volume}</td>
     <td class="col-supply">${supply}</td>
     <td class="col-chart">
-      <canvas class="sparkline-container" id="chart-${crypto.id}"></canvas>
+      <button class="btn btn-ghost chartBtn" data-coin-id="${crypto.id}">Chart</button>
     </td>
   `;
 
@@ -201,14 +205,18 @@ function createCryptoRow(crypto, index) {
 /**
  * Render sparkline chart using Chart.js
  * @param {string} coinId - Cryptocurrency ID
- * @param {Array<number>} data - Price data array
+ * @param {Array<number>} data - Price data, an array of arrays with this
+ * format: [[timestamp, price], [timestamp2, price2], ...]
  */
 function renderSparkline(coinId, data) {
   // Validate inputs
   if (!data || data.length === 0) return;
 
-  const canvas = document.getElementById(`chart-${coinId}`);
-  if (!canvas) return;
+  const canvasContainer = document.querySelector(".canvas-container");
+  if (!canvasContainer) return;
+  const canvas = document.createElement("canvas");
+  canvas.id = `chart-${coinId}`;
+  canvasContainer.insertAdjacentElement("afterbegin", canvas);
 
   // Destroy existing chart if any
   if (chartInstances[coinId]) {
@@ -216,52 +224,42 @@ function renderSparkline(coinId, data) {
   }
 
   // Determine trend and colors
-  const firstPrice = data[0];
-  const lastPrice = data[data.length - 1];
+  const firstPrice = data[0][1];
+  const lastPrice = data[data.length - 1][1];
   const isPositive = lastPrice >= firstPrice;
   const color = isPositive ? "#10B981" : "#EF4444";
   const gradientColor = isPositive ? "rgba(16, 185, 129, 0.2)" : "rgba(239, 68, 68, 0.2)";
 
-  // 5. Calculate min and max safely (O(n) complexity, avoids stack overflow on large arrays)
-  let min = data[0];
-  let max = data[0];
+  // Calculate min and max safely (O(n) complexity, avoids stack overflow on large arrays)
+  let min = data[0][1];
+  let max = data[0][1];
   for (let i = 1; i < data.length; i++) {
-    if (data[i] < min) min = data[i];
-    if (data[i] > max) max = data[i];
+    if (data[i][1] < min) min = data[i][1];
+    if (data[i][1] > max) max = data[i][1];
   }
 
-  // Create chart
-  const chart = new Chart(canvas, {
+  const chart = new window.Chart(canvas, {
     type: "line",
     data: {
+      labels: [...data.map((el) => formatDateOnlyDay(el[0]))],
       datasets: [
         {
-          data: data,
+          label: `${coinId[0].toUpperCase()}${coinId.slice(1)} Price Changes In Last 7 Days`,
+          data: [...data.map((el) => el[1])],
+          backgroundColor: gradientColor,
           borderColor: color,
           borderWidth: 2,
           fill: true,
           tension: 0.4,
           pointRadius: 0,
           pointHoverRadius: 0,
-          backgroundColor: (context) => {
-            const chart = context.chart;
-            const { ctx, chartArea } = chart;
-            if (!chartArea) return null; // Fallback for initial render
-
-            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-            gradient.addColorStop(0, gradientColor);
-            gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
-            return gradient;
-          },
         },
       ],
     },
     options: {
       ...sparklineBaseOptions,
       scales: {
-        ...sparklineBaseOptions.scales,
         y: {
-          ...sparklineBaseOptions.scales.y,
           min: min * 0.95,
           max: max * 1.05,
         },
@@ -270,6 +268,33 @@ function renderSparkline(coinId, data) {
   });
 
   chartInstances[coinId] = chart;
+}
+
+function renderChartOverlay() {
+  // <div class="canvas-overlay">
+  //   <div class="canvas-container">
+  //     <div class="close-overlay">&times;</div>
+  //     <canvas id="chart-${coinId}"></canvas> // this will be added later
+  //   </div>
+  // </div>
+
+  const canvasOverlay = document.createElement("div");
+  canvasOverlay.className = "canvas-overlay";
+  document.body.insertAdjacentElement("afterbegin", canvasOverlay);
+
+  const canvasContainer = document.createElement("div");
+  canvasContainer.className = "canvas-container";
+  canvasOverlay.insertAdjacentElement("afterbegin", canvasContainer);
+
+  const closeOverlay = document.createElement("button");
+  closeOverlay.classList.add("btn", "btn-ghost", "close-btn");
+  closeOverlay.textContent = "×";
+  canvasContainer.insertAdjacentElement("afterbegin", closeOverlay);
+}
+
+function removeChartOverlay() {
+  const canvasContainer = document.querySelector(".canvas-container");
+  canvasContainer.remove();
 }
 
 //-----------------------------------------
@@ -293,13 +318,21 @@ function handlePageChange(page) {
  * @param {string} coinId - Cryptocurrency ID
  */
 function handleFavoriteToggle(coinId) {
-  const btn = document.querySelector(`[data-coin-id="${coinId}"]`);
+  const btn = document.querySelector(`.favorite-btn[data-coin-id="${coinId}"]`);
   if (btn) {
     btn.classList.toggle("active");
 
     // This will be saved in backend
     console.log(`Toggled favorite for ${coinId}`);
   }
+}
+
+/**
+ * Handle chart toggle
+ * @param {string} coinId - Cryptocurrency ID
+ */
+function handleChartToggle(coinId) {
+  fetchChartData(coinId);
 }
 
 /**
@@ -340,16 +373,24 @@ function initEventListeners() {
     );
   }
 
-  // Favorite buttons (event delegation)
-  if (elements.tableBody) {
-    elements.tableBody.addEventListener("click", (e) => {
-      const favoriteBtn = e.target.closest(".favorite-btn");
-      if (favoriteBtn) {
-        const coinId = favoriteBtn.getAttribute("data-coin-id");
-        handleFavoriteToggle(coinId);
-      }
-    });
-  }
+  // Events on table body (event delegation)
+  if (!elements.tableBody) return;
+
+  elements.tableBody.addEventListener("click", (e) => {
+    // Favorite buttons
+    const favoriteBtn = e.target.closest(".favorite-btn");
+    if (favoriteBtn) {
+      const coinId = favoriteBtn.getAttribute("data-coin-id");
+      handleFavoriteToggle(coinId);
+    }
+
+    // Chart buttons
+    const chartBtn = e.target.closest(".chartBtn");
+    if (chartBtn) {
+      const coinId = chartBtn.getAttribute("data-coin-id");
+      handleChartToggle(coinId);
+    }
+  });
 }
 
 /**
