@@ -99,6 +99,7 @@ async function fetchCryptoData(page = 1) {
 
     showLoading(elements.tableBody, false);
 
+    allCryptoData = data;
     renderTable(data);
   } catch (error) {
     console.error("Error fetching crypto data:", error);
@@ -350,11 +351,11 @@ function handleChartToggle(coinId) {
 }
 
 /**
- * Handle search
+ * Handle search functionality for filtering coins inside the table
  * @param {string} query - Search query
  */
-function handleSearch(query) {
-  if (query.length < 2) {
+function handleTableSearch(query) {
+  if (query.length < 1) {
     fetchCryptoData(currentPage);
     return;
   }
@@ -377,13 +378,13 @@ function handleSearch(query) {
  */
 function initEventListeners() {
   // Search
-  const searchInput = document.querySelector(".search-input");
+  const searchInput = document.querySelector(".table__search-input");
   if (searchInput) {
     searchInput.addEventListener(
       "input",
       debounce((e) => {
-        handleSearch(e.target.value);
-      }, 300),
+        handleTableSearch(e.target.value);
+      }, 1000),
     );
   }
 

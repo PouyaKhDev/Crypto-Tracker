@@ -594,3 +594,45 @@ ol {
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
+
+/*
+-----------------------------------------------
+  General Search Bar
+-----------------------------------------------
+*/
+
+/* Search */
+.search-container {
+  position: relative;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .search-container {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.search-container .icon-search {
+  position: absolute;
+  left: var(--space-3);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 24rem;
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-10);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-primary);
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-primary-start);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}

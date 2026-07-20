@@ -38,135 +38,9 @@
   <body>
     <!-- Navigation -->
     {% block navigation %}
-    <header class="navbar" role="banner">
-      <nav class="navbar-container" role="navigation" aria-label="Main navigation">
-        <!-- Logo -->
-        <a href="{% url 'core:home' %}" class="navbar-brand" aria-label="CryptoMarket Home">
-          <div class="logo-icon">CM</div>
-          <span class="logo-text">CryptoMarket</span>
-        </a>
-
-        <!-- Desktop Menu -->
-        <ul class="navbar-menu">
-          <li class="navbar-item dropdown">
-            <button class="navbar-link dropdown-toggle" aria-expanded="false" aria-haspopup="true">
-              Cryptocurrencies
-              <svg
-                class="icon icon-chevron-down"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M4 6l4 4 4-4H4z" />
-              </svg>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#" class="dropdown-item" role="menuitem">All Cryptocurrencies</a></li>
-              <li><a href="#" class="dropdown-item" role="menuitem">Top Gainers</a></li>
-              <li><a href="#" class="dropdown-item" role="menuitem">Top Losers</a></li>
-              <li><a href="#" class="dropdown-item" role="menuitem">Recently Added</a></li>
-            </ul>
-          </li>
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">News</a>
-          </li>
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Portfolio</a>
-          </li>
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Watchlist</a>
-          </li>
-        </ul>
-
-        <!-- Search & Actions -->
-        <div class="navbar-actions">
-          <!-- Search -->
-          <div class="search-container">
-            <svg
-              class="icon icon-search"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            <input
-              type="search"
-              class="search-input"
-              placeholder="Search cryptocurrencies..."
-              aria-label="Search cryptocurrencies"
-            />
-          </div>
-
-          <!-- Currency Selector -->
-          <div class="selector-container">
-            <button class="selector-btn" aria-expanded="false" aria-haspopup="true">
-              <span class="selector-label">USD</span>
-              <svg
-                class="icon icon-chevron-down"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M4 6l4 4 4-4H4z" />
-              </svg>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-              <li><a href="#" class="dropdown-item" role="menuitem">USD</a></li>
-              <li><a href="#" class="dropdown-item" role="menuitem">EUR</a></li>
-              <li><a href="#" class="dropdown-item" role="menuitem">GBP</a></li>
-              <li><a href="#" class="dropdown-item" role="menuitem">JPY</a></li>
-            </ul>
-          </div>
-
-          <!-- Language Selector -->
-          <div class="selector-container">
-            <button class="selector-btn" aria-expanded="false" aria-haspopup="true">
-              <span class="selector-label">EN</span>
-              <svg
-                class="icon icon-chevron-down"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M4 6l4 4 4-4H4z" />
-              </svg>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-              <li><a href="#" class="dropdown-item" role="menuitem">English</a></li>
-              <li><a href="#" class="dropdown-item" role="menuitem">Español</a></li>
-              <li><a href="#" class="dropdown-item" role="menuitem">Français</a></li>
-              <li><a href="#" class="dropdown-item" role="menuitem">Deutsch</a></li>
-            </ul>
-          </div>
-
-          <!-- Auth Buttons -->
-          <div class="auth-buttons">
-            <a href="#" class="btn btn-ghost">Login</a>
-            <a href="#" class="btn btn-primary">Sign Up</a>
-          </div>
-        </div>
-
-        <!-- Mobile Menu Toggle -->
-        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-        </button>
-      </nav>
-    </header>
+    <!--  -->
+    {% include 'core/partials/nav.html' %}
+    <!--  -->
     {% endblock navigation %}
 
     <!-- Main Content -->
@@ -174,51 +48,9 @@
 
     <!-- Footer with Pagination -->
     {% block footer %}
-    <footer class="footer" role="contentinfo">
-      <div class="pagination-container">
-        <nav class="pagination" role="navigation" aria-label="Pagination">
-          <button class="pagination-btn" aria-label="Previous page" disabled>
-            <svg
-              class="icon icon-chevron-left"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path d="M10 4L6 8l4 4V4z" />
-            </svg>
-            <span>Previous</span>
-          </button>
-
-          <ul class="pagination-numbers">
-            <li><button class="pagination-number active" aria-current="page">1</button></li>
-            <li><button class="pagination-number">2</button></li>
-            <li><button class="pagination-number">3</button></li>
-            <li><button class="pagination-number">4</button></li>
-            <li><button class="pagination-number">5</button></li>
-          </ul>
-
-          <button class="pagination-btn" aria-label="Next page">
-            <span>Next</span>
-            <svg
-              class="icon icon-chevron-right"
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path d="M6 4l4 4-4 4V4z" />
-            </svg>
-          </button>
-        </nav>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2026 CryptoMarket. All rights reserved.</p>
-      </div>
-    </footer>
+    <!--  -->
+    {% include 'core/partials/footer.html' %}
+    <!--  -->
     {% endblock footer %}
   </body>
 </html>

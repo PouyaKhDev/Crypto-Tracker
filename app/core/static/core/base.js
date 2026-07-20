@@ -30,6 +30,8 @@ function formatCurrency(value, currency = "USD", decimals = 2) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: currency,
+    notation: "compact",
+    compactDisplay: "short",
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   }).format(value);
@@ -291,6 +293,8 @@ function showLoading(element, show = true) {
   let spinnerWrapper = element.querySelector(spinnerSelector);
 
   if (show && !spinnerWrapper) {
+    element.innerHTML = "";
+
     if (isTableContext) {
       const tr = document.createElement("tr");
       tr.classList.add("spinner-row");
