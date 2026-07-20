@@ -322,10 +322,6 @@
   transition: color var(--transition-fast);
 }
 
-.favorite-btn:hover {
-  color: var(--color-warning);
-}
-
 .favorite-btn.active {
   color: var(--color-warning);
 }
