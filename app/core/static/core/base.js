@@ -284,8 +284,10 @@ function createSpinner() {
  * Show loading state
  * @param {HTMLElement} element - The element to show loading state
  * @param {boolean} show - Whether to show or hide loading state
+ * @param {boolean} removeChildren - Whether remove the elements' children or not
+ *    (only when show is true)
  */
-function showLoading(element, show = true) {
+function showLoading(element, show = true, removeChildren = true) {
   // Detect if there are any table-related element
   const isTableContext = ["TABLE", "TBODY", "THEAD", "TFOOT"].includes(element.tagName);
   const spinnerSelector = isTableContext ? ".spinner-row" : ".spinner-container";
@@ -293,7 +295,7 @@ function showLoading(element, show = true) {
   let spinnerWrapper = element.querySelector(spinnerSelector);
 
   if (show && !spinnerWrapper) {
-    element.innerHTML = "";
+    if (removeChildren) element.innerHTML = "";
 
     if (isTableContext) {
       const tr = document.createElement("tr");
@@ -354,90 +356,4 @@ function showError(message, container) {
 
   container.innerHTML = "";
   container.appendChild(errorDiv);
-}
-
-//-----------------------------------------
-//  Event Listeners & Initialization
-//-----------------------------------------
-
-/**
- * Initialize dropdown functionality
- */
-function initDropdowns() {
-  document.querySelectorAll(".dropdown").forEach((dropdown) => {
-    const toggle = dropdown.querySelector(".dropdown-toggle");
-
-    if (toggle) {
-      toggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleDropdown(dropdown);
-      });
-    }
-  });
-
-  // Close dropdowns when clicking outside
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest(".dropdown")) {
-      document.querySelectorAll(".dropdown-menu.show").forEach((menu) => {
-        menu.classList.remove("show");
-        menu.setAttribute("aria-hidden", "true");
-      });
-      document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]').forEach((toggle) => {
-        toggle.setAttribute("aria-expanded", "false");
-      });
-    }
-  });
-}
-
-/**
- * Initialize mobile menu
- */
-function initMobileMenu() {
-  const toggle = document.querySelector(".mobile-menu-toggle");
-  const menu = document.querySelector(".navbar-menu");
-
-  if (toggle && menu) {
-    toggle.addEventListener("click", () => {
-      const isExpanded = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", !isExpanded);
-      menu.classList.toggle("mobile-open");
-    });
-  }
-}
-
-/**
- * Initialize search functionality
- */
-function initSearch() {
-  const searchInput = document.querySelector(".search-input");
-
-  if (searchInput) {
-    const handleSearch = debounce((value) => {
-      if (value.length > 2) {
-        // search logic
-        console.log("Searching for:", value);
-      }
-    }, 300);
-
-    searchInput.addEventListener("input", (e) => {
-      handleSearch(e.target.value);
-    });
-  }
-}
-
-/**
- * Initialize all components
- */
-function init() {
-  initDropdowns();
-  initMobileMenu();
-  initSearch();
-}
-
-// Initialize when DOM is ready
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", init);
-} else {
-  init();
 }

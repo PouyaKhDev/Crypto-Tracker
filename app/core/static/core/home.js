@@ -117,7 +117,7 @@ async function fetchChartData(coinId) {
   try {
     renderChartOverlay();
     const overlayContainer = document.querySelector(".canvas-container");
-    showLoading(overlayContainer, true);
+    showLoading(overlayContainer, true, false);
 
     const data = await getCoinChart(coinId);
 
@@ -293,28 +293,29 @@ function renderChartOverlay() {
   canvasContainer.insertAdjacentElement("afterbegin", closeOverlay);
 
   // Close the chart overlay if close button or overlay is clicked (using event delegation)
-  canvasOverlay.addEventListener("click", function (e) {
-    // Check if the overlay itself is clicked
-    const isOverlay = e.target.classList.contains("canvas-overlay");
-    if (isOverlay) {
-      this.remove();
-      return;
-    }
-
-    // Check if the close button is clicked
-    const closeBtn = e.target.closest(".close-btn");
-    if (closeBtn) this.remove();
-  });
-}
-
-function removeChartOverlay() {
-  const canvasContainer = document.querySelector(".canvas-container");
-  canvasContainer.remove();
+  canvasOverlay.addEventListener("click", handleRemoveChartOverlay);
 }
 
 //-----------------------------------------
 //  Event Handlers
 //-----------------------------------------
+
+/**
+ * Handles removing chart overlay
+ * @param {Event} e - Specific event listener object
+ */
+function handleRemoveChartOverlay(e) {
+  // Check if the overlay itself is clicked
+  const isOverlay = e.target.classList.contains("canvas-overlay");
+  if (isOverlay) {
+    this.remove();
+    return;
+  }
+
+  // Check if the close button is clicked
+  const closeBtn = e.target.closest(".close-btn");
+  if (closeBtn) this.remove();
+}
 
 /**
  * Handle page change
