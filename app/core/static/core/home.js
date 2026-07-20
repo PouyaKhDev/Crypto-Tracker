@@ -290,6 +290,20 @@ function renderChartOverlay() {
   closeOverlay.classList.add("btn", "btn-ghost", "close-btn");
   closeOverlay.textContent = "×";
   canvasContainer.insertAdjacentElement("afterbegin", closeOverlay);
+
+  // Close the chart overlay if close button or overlay is clicked (using event delegation)
+  canvasOverlay.addEventListener("click", function (e) {
+    // Check if the overlay itself is clicked
+    const isOverlay = e.target.classList.contains("canvas-overlay");
+    if (isOverlay) {
+      this.remove();
+      return;
+    }
+
+    // Check if the close button is clicked
+    const closeBtn = e.target.closest(".close-btn");
+    if (closeBtn) this.remove();
+  });
 }
 
 function removeChartOverlay() {
