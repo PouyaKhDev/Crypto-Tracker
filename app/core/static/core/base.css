@@ -1,5 +1,20 @@
 /*
 -----------------------------------------------
+    Break Points (just for reference)
+-----------------------------------------------
+*/
+
+/*
+  X-small: 480px;
+  small: 640px;
+  medium: 768px;
+  large: 1024px;
+  X-large: 1280px;
+  2X-large: 1536px;
+*/
+
+/*
+-----------------------------------------------
     CSS Variables
 -----------------------------------------------
 */
@@ -553,12 +568,6 @@ ol {
 -----------------------------------------------
 */
 
-.auth-buttons {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -607,7 +616,7 @@ ol {
   display: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .search-container {
     display: flex;
     align-items: center;

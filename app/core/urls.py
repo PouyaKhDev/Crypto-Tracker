@@ -1,10 +1,10 @@
 from django.urls import path
 
-from core.views import home, home_redirect
+from core.views import dashboard, dashboard_redirect
 
 app_name = "core"
 
 urlpatterns = [
-    path("", home_redirect, name="home_redirect"),
-    path("home/", home, name="home"),
+    path("", dashboard_redirect, name="dashboard_redirect"),
+    path("dashboard/", dashboard, name="dashboard"),
 ]

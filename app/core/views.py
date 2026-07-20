@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-def home(request):
-    """Home page view"""
+def dashboard(request):
+    """dashboard page view"""
     context = {}
-    return render(request, "core/home.html", context)
+    return render(request, "core/dashboard.html", context)
 
 
-def home_redirect(request):
-    """Redirect to home view"""
-    return redirect("core:home")
+def dashboard_redirect(request):
+    """Redirect to dashboard view"""
+    return redirect("core:dashboard")

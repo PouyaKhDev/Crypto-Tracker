@@ -1,42 +1,21 @@
 <header class="navbar" role="banner">
   <nav class="navbar-container" role="navigation" aria-label="Main navigation">
     <!-- Logo -->
-    <a href="{% url 'core:home' %}" class="navbar-brand" aria-label="CryptoMarket Home">
+    <a href="{% url 'core:dashboard' %}" class="navbar-brand" aria-label="CryptoMarket dashboard">
       <div class="logo-icon">CM</div>
       <span class="logo-text">CryptoMarket</span>
     </a>
 
     <!-- Desktop Menu -->
     <ul class="navbar-menu">
-      <li class="navbar-item dropdown">
-        <button class="navbar-link dropdown-toggle" aria-expanded="false" aria-haspopup="true">
-          Cryptocurrencies
-          <svg
-            class="icon icon-chevron-down"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path d="M4 6l4 4 4-4H4z" />
-          </svg>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="#" class="dropdown-item" role="menuitem">All Cryptocurrencies</a></li>
-          <li><a href="#" class="dropdown-item" role="menuitem">Top Gainers</a></li>
-          <li><a href="#" class="dropdown-item" role="menuitem">Top Losers</a></li>
-          <li><a href="#" class="dropdown-item" role="menuitem">Recently Added</a></li>
-        </ul>
+      <li class="navbar-item">
+        <a href="#" class="navbar-link">Home</a>
       </li>
       <li class="navbar-item">
-        <a href="#" class="navbar-link">News</a>
+        <a href="#" class="navbar-link">Dashboard</a>
       </li>
       <li class="navbar-item">
-        <a href="#" class="navbar-link">Portfolio</a>
-      </li>
-      <li class="navbar-item">
-        <a href="#" class="navbar-link">Watchlist</a>
+        <a href="#" class="navbar-link">Favorites</a>
       </li>
     </ul>
 
@@ -64,52 +43,6 @@
           placeholder="Search cryptocurrencies..."
           aria-label="Search cryptocurrencies"
         />
-      </div>
-
-      <!-- Currency Selector -->
-      <div class="selector-container">
-        <button class="selector-btn" aria-expanded="false" aria-haspopup="true">
-          <span class="selector-label">USD</span>
-          <svg
-            class="icon icon-chevron-down"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path d="M4 6l4 4 4-4H4z" />
-          </svg>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-          <li><a href="#" class="dropdown-item" role="menuitem">USD</a></li>
-          <li><a href="#" class="dropdown-item" role="menuitem">EUR</a></li>
-          <li><a href="#" class="dropdown-item" role="menuitem">GBP</a></li>
-          <li><a href="#" class="dropdown-item" role="menuitem">JPY</a></li>
-        </ul>
-      </div>
-
-      <!-- Language Selector -->
-      <div class="selector-container">
-        <button class="selector-btn" aria-expanded="false" aria-haspopup="true">
-          <span class="selector-label">EN</span>
-          <svg
-            class="icon icon-chevron-down"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path d="M4 6l4 4 4-4H4z" />
-          </svg>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-          <li><a href="#" class="dropdown-item" role="menuitem">English</a></li>
-          <li><a href="#" class="dropdown-item" role="menuitem">Español</a></li>
-          <li><a href="#" class="dropdown-item" role="menuitem">Français</a></li>
-          <li><a href="#" class="dropdown-item" role="menuitem">Deutsch</a></li>
-        </ul>
       </div>
 
       <!-- Auth Buttons -->
