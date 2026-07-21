@@ -175,7 +175,7 @@
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   color: var(--text-primary);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-10);
 }
 
 .section-subtitle {
@@ -332,12 +332,6 @@
 -----------------------------------------------
 */
 
-.footer {
-  background-color: var(--bg-secondary);
-  border-top: 1px solid var(--border-color);
-  padding: var(--space-6) var(--space-6) var(--space-8);
-}
-
 .pagination-container {
   max-width: 140rem;
   margin: 0 auto var(--space-6);
@@ -405,12 +399,6 @@
   background: var(--color-primary-gradient);
   border-color: transparent;
   color: var(--text-inverse);
-}
-
-.footer-bottom {
-  text-align: center;
-  color: var(--text-muted);
-  font-size: var(--font-size-sm);
 }
 
 /*

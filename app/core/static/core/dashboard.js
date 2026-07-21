@@ -29,8 +29,6 @@ const elements = {
   ethDominance: document.getElementById("eth-dominance"),
   usdtDominance: document.getElementById("usdt-dominance"),
   defiMarketCap: document.getElementById("defi-market-cap"),
-  marketCapText: document.getElementById("market-cap-text"),
-  volumeText: document.getElementById("volume-text"),
 
   // Table
   tableBody: document.getElementById("crypto-table-body"),
@@ -73,12 +71,6 @@ async function fetchGlobalData() {
     if (elements.defiMarketCap) {
       const defiData = await getGlobalDefiData();
       elements.defiMarketCap.textContent = formatCurrency(defiData.defi_market_cap);
-    }
-    if (elements.marketCapText) {
-      elements.marketCapText.textContent = formatCurrency(global.total_market_cap.usd);
-    }
-    if (elements.volumeText) {
-      elements.volumeText.textContent = formatCurrency(global.total_volume.usd);
     }
   } catch (error) {
     console.error("Error fetching global data:", error);

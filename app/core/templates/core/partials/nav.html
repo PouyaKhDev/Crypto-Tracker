@@ -2,7 +2,7 @@
   <!-- MAIN NAVIGATION -->
   <nav class="navbar-container" role="navigation" aria-label="Main navigation">
     <!-- Logo -->
-    <a href="{% url 'core:dashboard' %}" class="navbar-brand" aria-label="CryptoMarket dashboard">
+    <a href="{% url 'core:home' %}" class="navbar-brand" aria-label="CryptoMarket home">
       <div class="logo-icon">CM</div>
       <span class="logo-text">CryptoMarket</span>
     </a>
@@ -10,10 +10,10 @@
     <!-- Desktop Menu -->
     <ul class="navbar-menu">
       <li class="navbar-item">
-        <a href="#" class="navbar-link">Home</a>
+        <a href="{% url 'core:home' %}" class="navbar-link">Home</a>
       </li>
       <li class="navbar-item">
-        <a href="#" class="navbar-link">Dashboard</a>
+        <a href="{% url 'core:dashboard' %}" class="navbar-link">Dashboard</a>
       </li>
       <li class="navbar-item">
         <a href="#" class="navbar-link">Favorites</a>
@@ -73,7 +73,7 @@
     aria-hidden="true"
   >
     <div class="mobile-menu-header">
-      <a href="{% url 'core:dashboard' %}" class="mobile-menu-logo">
+      <a href="{% url 'core:home' %}" class="mobile-menu-logo">
         <div class="logo-icon">CM</div>
         <span class="logo-text">CryptoMarket</span>
       </a>
@@ -87,13 +87,13 @@
       <div class="mobile-menu-section">
         <ul class="mobile-menu-list">
           <li class="mobile-menu-item">
-            <a href="#" class="mobile-menu-link">
+            <a href="{% url 'core:home' %}" class="mobile-menu-link">
               <span>Home</span>
             </a>
           </li>
 
           <li class="mobile-menu-item">
-            <a href="#" class="mobile-menu-link">
+            <a href="{% url 'core:dashboard' %}" class="mobile-menu-link">
               <span>Dashboard</span>
             </a>
           </li>

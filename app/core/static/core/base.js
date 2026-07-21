@@ -178,7 +178,7 @@ async function getCryptoMarketData(options = {}) {
     order: "market_cap_desc",
     per_page: 100,
     page: 1,
-    sparkline: true,
+    sparkline: false,
   };
 
   const params = { ...defaultOptions, ...options };

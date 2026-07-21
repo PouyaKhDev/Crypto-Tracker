@@ -28,6 +28,11 @@
     var(--color-primary-start) 0%,
     var(--color-primary-end) 100%
   );
+  --color-primary-gradient-hero: linear-gradient(
+    135deg,
+    rgba(78, 70, 229, 0.8) 0%,
+    rgba(124, 58, 237, 0.9) 100%
+  );
 
   /* Colors - Backgrounds */
   --bg-primary: #f9fafb;
@@ -601,6 +606,7 @@ ol {
 
 .btn-primary:hover {
   transform: translateY(-1px);
+  color: var(--text-inverse);
   box-shadow: var(--shadow-md);
 }
 
@@ -644,4 +650,22 @@ ol {
   outline: none;
   border-color: var(--color-primary-start);
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/*
+-----------------------------------------------
+  Footer
+-----------------------------------------------
+*/
+
+.footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: var(--space-6) var(--space-6) var(--space-8);
+}
+
+.footer-bottom {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
 }
