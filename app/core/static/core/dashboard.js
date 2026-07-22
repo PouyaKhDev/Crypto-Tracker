@@ -35,6 +35,48 @@ const elements = {
 };
 
 //-----------------------------------------
+//  Utilities
+//-----------------------------------------
+
+/**
+ * Get watchlist from localStorage
+ * @returns {Array} Array of coin IDs
+ */
+function getWatchlist() {
+  const saved = localStorage.getItem("cryptomarket_watchlist");
+  return saved ? JSON.parse(saved) : [];
+}
+
+/**
+ * Save watchlist to localStorage
+ * @param {Array} watchlist - Array of coin IDs
+ */
+function saveWatchlist(watchlist) {
+  localStorage.setItem("cryptomarket_watchlist", JSON.stringify(watchlist));
+}
+
+/**
+ * Toggle coin in watchlist
+ * @param {string} coinId - Coin ID to toggle
+ */
+function toggleCoinInWatchlist(coinId) {
+  const watchlist = getWatchlist();
+  const index = watchlist.indexOf(coinId);
+
+  if (index > -1) {
+    // Remove from watchlist
+    watchlist.splice(index, 1);
+    saveWatchlist(watchlist);
+    return false;
+  } else {
+    // Add to watchlist
+    watchlist.push(coinId);
+    saveWatchlist(watchlist);
+    return true;
+  }
+}
+
+//-----------------------------------------
 //  Data Fetching
 //-----------------------------------------
 
@@ -127,6 +169,33 @@ async function fetchChartData(coinId) {
 //-----------------------------------------
 //  Rendering
 //-----------------------------------------
+
+/**
+ * Update favorite button UI
+ * @param {HTMLElement} btn - Favorite button element
+ * @param {boolean} isFavorite - Whether the coin is favorited
+ */
+function updateFavoriteButtonUI(btn, isFavorite) {
+  const svg = btn.querySelector("svg");
+  if (svg) {
+    svg.setAttribute("fill", isFavorite ? "currentColor" : "none");
+  }
+  btn.classList.toggle("active", isFavorite);
+}
+
+/**
+ * Update all favorite buttons based on watchlist
+ */
+function updateAllFavoriteButtons() {
+  const watchlist = getWatchlist();
+  const favoriteButtons = document.querySelectorAll(".favorite-btn");
+
+  favoriteButtons.forEach((btn) => {
+    const coinId = btn.getAttribute("data-coin-id");
+    const isFavorite = watchlist.includes(coinId);
+    updateFavoriteButtonUI(btn, isFavorite);
+  });
+}
 
 /**
  * Render cryptocurrency table
@@ -323,17 +392,22 @@ function handlePageChange(page) {
 }
 
 /**
- * Handle favorite toggle
- * @param {string} coinId - Cryptocurrency ID
+ * Handle favorite button click
+ * @param {Event} e - Click event
  */
-function handleFavoriteToggle(coinId) {
-  const btn = document.querySelector(`.favorite-btn[data-coin-id="${coinId}"]`);
-  if (btn) {
-    btn.classList.toggle("active");
+function handleFavoriteClick(e) {
+  const btn = e.target.closest(".favorite-btn");
+  if (!btn) return;
 
-    // This will be saved in backend
-    console.log(`Toggled favorite for ${coinId}`);
-  }
+  const coinId = btn.getAttribute("data-coin-id");
+  const isFavorite = toggleCoinInWatchlist(coinId);
+  updateFavoriteButtonUI(btn, isFavorite);
+
+  showToast(
+    isFavorite ? "Added to watchlist!" : "Removed from watchlist",
+    isFavorite ? "success" : "info",
+    2000,
+  );
 }
 
 /**
@@ -368,6 +442,21 @@ function handleTableSearch(query) {
 //-----------------------------------------
 
 /**
+ * Initialize favorite functionality
+ */
+function initFavorite() {
+  updateAllFavoriteButtons();
+
+  document.addEventListener("click", handleFavoriteClick);
+
+  window.addEventListener("storage", (e) => {
+    if (e.key === "cryptomarket_watchlist") {
+      updateAllFavoriteButtons();
+    }
+  });
+}
+
+/**
  * Initialize event listeners
  */
 function initEventListeners() {
@@ -384,7 +473,6 @@ function initEventListeners() {
 
   // Events on table body (event delegation)
   if (!elements.tableBody) return;
-
   elements.tableBody.addEventListener("click", (e) => {
     // Favorite buttons
     const favoriteBtn = e.target.closest(".favorite-btn");
@@ -409,8 +497,8 @@ async function init() {
   // Fetch data
   await Promise.all([fetchGlobalData(), fetchCryptoData(currentPage)]);
 
-  // Initialize event listeners
   initEventListeners();
+  initFavorite();
 }
 
 // Initialize when DOM is ready

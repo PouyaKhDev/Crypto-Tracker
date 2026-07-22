@@ -1,6 +1,10 @@
 from django.urls import path
 
-from core.views import dashboard, home_redirect, home
+from core.views import (
+    dashboard,
+    home_redirect,
+    home,
+)
 
 app_name = "core"
 
