@@ -326,6 +326,56 @@
   color: var(--color-warning);
 }
 
+/* Calculator Column */
+.col-calc {
+  width: 20rem;
+}
+
+.calc-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.calc-input {
+  width: 8rem;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  text-align: right;
+  transition: all var(--transition-fast);
+}
+
+.calc-input:focus {
+  outline: none;
+  border-color: var(--color-primary-start);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  background-color: var(--bg-secondary);
+}
+
+/* Remove default number input */
+.calc-input::-webkit-outer-spin-button,
+.calc-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.calc-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.calc-price {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  min-width: 8rem;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
 /*
 -----------------------------------------------
     Pagination

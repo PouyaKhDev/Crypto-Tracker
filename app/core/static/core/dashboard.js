@@ -259,6 +259,21 @@ function createCryptoRow(crypto, index) {
     <td class="col-supply">${supply}</td>
     <td class="col-chart">
       <button class="btn btn-ghost chartBtn" data-coin-id="${crypto.id}">Chart</button>
+
+    </td>
+        <td class="col-calc">
+      <div class="calc-container">
+        <input
+          type="number"
+          class="calc-input"
+          placeholder="0"
+          min="0"
+          step="any"
+          data-coin-price="${crypto.current_price}"
+          aria-label="Amount of ${crypto.symbol}"
+        >
+        <span class="calc-price">$0.00</span>
+      </div>
     </td>
   `;
 
@@ -414,8 +429,12 @@ function handleFavoriteClick(e) {
  * Handle chart toggle
  * @param {string} coinId - Cryptocurrency ID
  */
-function handleChartToggle(coinId) {
-  fetchChartData(coinId);
+function handleChartToggle(e, coinId) {
+  const chartBtn = e.target.closest(".chartBtn");
+  if (chartBtn) {
+    const coinId = chartBtn.getAttribute("data-coin-id");
+    fetchChartData(coinId);
+  }
 }
 
 /**
@@ -435,6 +454,25 @@ function handleTableSearch(query) {
   );
 
   renderTable(filtered);
+}
+
+/**
+ * Handle real-time price calculation
+ */
+function handleCalcInput(e) {
+  if (e.target.classList.contains("calc-input")) {
+    const input = e.target;
+    const pricePerUnit = parseFloat(input.dataset.coinPrice);
+    const amount = parseFloat(input.value);
+    const priceDisplay = input.nextElementSibling;
+
+    if (!isNaN(amount) && amount > 0) {
+      const total = amount * pricePerUnit;
+      priceDisplay.textContent = formatCurrency(total);
+    } else {
+      priceDisplay.textContent = "$0.00";
+    }
+  }
 }
 
 //-----------------------------------------
@@ -474,20 +512,9 @@ function initEventListeners() {
   // Events on table body (event delegation)
   if (!elements.tableBody) return;
   elements.tableBody.addEventListener("click", (e) => {
-    // Favorite buttons
-    const favoriteBtn = e.target.closest(".favorite-btn");
-    if (favoriteBtn) {
-      const coinId = favoriteBtn.getAttribute("data-coin-id");
-      handleFavoriteToggle(coinId);
-    }
-
-    // Chart buttons
-    const chartBtn = e.target.closest(".chartBtn");
-    if (chartBtn) {
-      const coinId = chartBtn.getAttribute("data-coin-id");
-      handleChartToggle(coinId);
-    }
+    handleChartToggle(e, coinId);
   });
+  elements.tableBody.addEventListener("input", handleCalcInput);
 }
 
 /**
