@@ -82,6 +82,9 @@
   color: var(--text-inverse);
   margin-bottom: var(--space-8);
 }
+.auth-logo:hover {
+  color: var(--text-primary);
+}
 
 .auth-branding-title {
   font-size: var(--font-size-3xl);
@@ -385,6 +388,10 @@
 }
 .strength-bar.strong {
   background-color: var(--color-positive);
+}
+
+.auth-submit-btn {
+  margin-top: var(--space-6);
 }
 
 /*

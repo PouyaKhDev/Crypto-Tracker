@@ -1,14 +1,20 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 
 def dashboard(request):
     """Dashboard page view"""
+    if not request.user.is_authenticated:
+        return redirect("accounts:login")
+
     context = {}
     return render(request, "core/dashboard.html", context)
 
 
 def home(request):
     """Home page view"""
+    if request.user:
+        print(request.user)
     context = {}
     return render(request, "core/home.html", context)
 
