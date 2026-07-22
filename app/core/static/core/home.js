@@ -30,6 +30,7 @@ async function fetchStats() {
       elements.totalVolume.textContent = formatCurrency(global.total_volume.usd);
     }
   } catch (error) {
+    showToast("Failed to load cryptocurrency stats data. Please try again later.", "error");
     console.log("Error fetching the stats data", error);
   }
 }
@@ -42,6 +43,7 @@ async function fetchCryptoMarketData() {
     showLoading(elements.marketsStatsGrid, false);
     renderCryptoMarketStats(data);
   } catch (error) {
+    showToast("Failed to load crypto market data. Please try again later.", "error");
     console.log("Error fetching the crypto market data", error);
   }
 }

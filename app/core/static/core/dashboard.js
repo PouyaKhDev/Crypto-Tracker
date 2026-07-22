@@ -73,6 +73,7 @@ async function fetchGlobalData() {
       elements.defiMarketCap.textContent = formatCurrency(defiData.defi_market_cap);
     }
   } catch (error) {
+    showToast("Failed to load dashboard data. Please try again later.", "error");
     console.error("Error fetching global data:", error);
   }
 }
@@ -94,8 +95,8 @@ async function fetchCryptoData(page = 1) {
     allCryptoData = data;
     renderTable(data);
   } catch (error) {
+    showToast("Failed to load cryptocurrency data. Please try again later.", "error");
     console.error("Error fetching crypto data:", error);
-    showError("Failed to load cryptocurrency data. Please try again later.", elements.tableBody);
     showLoading(elements.tableBody, false);
   }
 }
@@ -117,8 +118,8 @@ async function fetchChartData(coinId) {
 
     renderSparkline(coinId, data);
   } catch (error) {
+    showToast(`Failed to load chart data for ${coinId}. Please try again later.`, "error");
     console.error("Error fetching chart data:", error);
-    showError(`Failed to load chart data for ${coinId}. Please try again later.`, overlayContainer);
     showLoading(overlayContainer, false);
   }
 }
