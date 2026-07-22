@@ -102,3 +102,14 @@ This project uses the **CoinGecko Free API**.
 
 - The free tier allows up to **100 calls per minute** and **10K calls per month**.
 - If you experience missing data or errors, you may have hit the rate limit. Wait a minute and refresh the page.
+
+## 🤖 AI Usage & Transparency
+
+I utilized AI tools to assist with specific aspects of this project's development. AI was used to accelerate the workflow, generate boilerplate code and overcome minor roadblocks.
+
+Specifically, AI assistance was used for:
+
+1. **SVG Icon Creation:** Generating custom, inline SVG code for the user interface icons.
+2. **Code Documentation:** Writing descriptive comments and docstrings to ensure the codebase is readable and maintainable.
+3. **README Documentation:** Drafting the initial structure and content for this README file (which was subsequently reviewed, refined, and updated by me).
+4. **Syntax Refreshing:** Providing quick reminders and corrections for specific HTML, CSS and JavaScript syntax when needed.
