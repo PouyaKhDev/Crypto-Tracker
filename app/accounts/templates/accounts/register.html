@@ -1,0 +1,227 @@
+{% extends 'core/base.html' %}
+<!--  -->
+{% load static %}
+
+<!--  -->
+{% block navigation %} {% endblock navigation %}
+<!--  -->
+
+{% block css_js %}
+<link rel="stylesheet" href="{% static 'accounts/auth.css' %}" />
+<script defer src="{% static 'accounts/auth.js' %}"></script>
+{% endblock css_js %}
+
+<!--  -->
+{% block main %}
+<div class="auth-container">
+  <!-- Left Side: Branding -->
+  <div class="auth-branding">
+    <div class="auth-branding-content">
+      <a href="{% url 'core:home' %}" class="auth-logo">
+        <div class="logo-icon">CM</div>
+        <span class="logo-text">CryptoMarket</span>
+      </a>
+      <h1 class="auth-branding-title">Start your crypto journey today.</h1>
+      <p class="auth-branding-subtitle">
+        Join thousands of traders who trust CryptoMarket for real-time data and portfolio
+        management.
+      </p>
+      <ul class="auth-features-list">
+        <li class="auth-feature-item">
+          <svg
+            class="feature-check-icon"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Real-time market data</span>
+        </li>
+        <li class="auth-feature-item">
+          <svg
+            class="feature-check-icon"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Advanced portfolio tracking</span>
+        </li>
+      </ul>
+    </div>
+    <div class="auth-branding-footer">
+      <p>&copy; 2026 CryptoMarket. All rights reserved.</p>
+    </div>
+  </div>
+
+  <!-- Right Side: Form -->
+  <div class="auth-form-wrapper">
+    <div class="auth-form-container">
+      <div class="auth-form-header">
+        <h2 class="auth-form-title">Create your account</h2>
+        <p class="auth-form-subtitle">
+          Already have an account?
+          <a href="{% url 'accounts:login' %}" class="auth-link">Sign in</a>
+        </p>
+      </div>
+
+      <!-- Django Form -->
+      <form class="auth-form" method="POST" action="{% url 'accounts:register' %}">
+        {% csrf_token %}
+
+        <!-- Username Field -->
+        <div class="form-group">
+          <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+          <div class="input-wrapper">
+            <svg
+              class="input-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <input
+              type="text"
+              name="{{ form.username.name }}"
+              id="{{ form.username.id_for_label }}"
+              class="form-input {% if form.username.errors %}error{% endif %}"
+              placeholder="Choose a username"
+              value="{{ form.username.value|default_if_none:'' }}"
+              required
+              autocomplete="username"
+            />
+          </div>
+          {% if form.username.errors %}
+          <span class="form-error">{{ form.username.errors.0 }}</span>
+          {% endif %}
+          <!-- Django help text for username requirements -->
+          {% if form.username.help_text %}
+          <small class="form-text text-muted" style="font-size: 1.2rem; color: var(--text-muted)">
+            {{ form.username.help_text|safe }}
+          </small>
+          {% endif %}
+        </div>
+
+        <!-- Password1 Field -->
+        <div class="form-group">
+          <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+          <div class="input-wrapper">
+            <svg
+              class="input-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input
+              type="password"
+              name="{{ form.password1.name }}"
+              id="{{ form.password1.id_for_label }}"
+              class="form-input {% if form.password1.errors %}error{% endif %}"
+              placeholder="Create a strong password"
+              required
+              autocomplete="new-password"
+            />
+            <button type="button" class="input-toggle" aria-label="Toggle password visibility">
+              <svg
+                class="icon-eye"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+          {% if form.password1.errors %}
+          <span class="form-error">{{ form.password1.errors.0 }}</span>
+          {% endif %}
+          <!-- Password Strength Meter (Visual Only) -->
+          <div class="password-strength" id="password-strength">
+            <div class="strength-bar"></div>
+            <div class="strength-bar"></div>
+            <div class="strength-bar"></div>
+            <div class="strength-bar"></div>
+          </div>
+        </div>
+
+        <!-- Password2 Field (Confirm) -->
+        <div class="form-group">
+          <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+          <div class="input-wrapper">
+            <svg
+              class="input-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input
+              type="password"
+              name="{{ form.password2.name }}"
+              id="{{ form.password2.id_for_label }}"
+              class="form-input {% if form.password2.errors %}error{% endif %}"
+              placeholder="Repeat your password"
+              required
+              autocomplete="new-password"
+            />
+          </div>
+          {% if form.password2.errors %}
+          <span class="form-error">{{ form.password2.errors.0 }}</span>
+          {% endif %}
+        </div>
+
+        <!-- Terms -->
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" class="checkbox-input" id="terms" required />
+            <span class="checkbox-custom"></span>
+            <span class="checkbox-text">
+              I agree to the
+              <a href="#" class="auth-link">Terms of Service</a>
+              and
+              <a href="#" class="auth-link">Privacy Policy</a>
+            </span>
+          </label>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary btn-full-width btn-large auth-submit-btn">
+          Create account
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock main %}
+
+<!--  -->
+{% block footer %} {% endblock footer %}

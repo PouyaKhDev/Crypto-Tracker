@@ -1,5 +1,4 @@
 from django.urls import path
-from django.views import LoginView
 
 from core.views import dashboard, home_redirect, home
 

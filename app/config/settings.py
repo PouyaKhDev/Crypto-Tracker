@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     ### Local ###
+    "accounts",
     "core",
 ]
 
@@ -132,3 +133,8 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+
+# Auth settings
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "core:dashboard"
