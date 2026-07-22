@@ -429,7 +429,7 @@ function handleFavoriteClick(e) {
  * Handle chart toggle
  * @param {string} coinId - Cryptocurrency ID
  */
-function handleChartToggle(e, coinId) {
+function handleChartToggle(e) {
   const chartBtn = e.target.closest(".chartBtn");
   if (chartBtn) {
     const coinId = chartBtn.getAttribute("data-coin-id");
@@ -512,7 +512,7 @@ function initEventListeners() {
   // Events on table body (event delegation)
   if (!elements.tableBody) return;
   elements.tableBody.addEventListener("click", (e) => {
-    handleChartToggle(e, coinId);
+    handleChartToggle(e);
   });
   elements.tableBody.addEventListener("input", handleCalcInput);
 }
