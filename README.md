@@ -65,8 +65,8 @@ CryptoMarket is a simple modern web application designed as a university project
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/cryptomarket.git
-   cd cryptomarket
+   git clone https://github.com/PouyaKhDev/Crypto-Tracker.git
+   cd crypto_tracker
    ```
 
 2. **Start the application**
